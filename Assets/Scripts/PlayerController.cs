@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float attackCooldown = 1.0f;
     public GameObject spear;
     public int health = 200;
+    public Transform movePoint;
 
     Rigidbody2D rigidbody;
     Animator animator;
@@ -16,6 +18,7 @@ public class PlayerController : MonoBehaviour
     float horizontal;
     float vertical;
     float cooldown;
+
     public void ReceiveDamge(int damage) {
         if (health - damage <= 0) {
             Destroy(gameObject);
@@ -30,14 +33,26 @@ public class PlayerController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         cooldown = 0;
+        movePoint.parent = null;
     }
 
     // Update is called once per frame
     void Update()
     {
+        horizontal = Input.GetAxisRaw("Horizontal");
+
+        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, speed * Time.deltaTime);
+        if (Vector3.Distance(transform.position, movePoint.position) <= 0.001f)
+        {
+            
+            if (Mathf.Abs(horizontal) == 1f && Mathf.Abs(horizontal * 1.4f + movePoint.position.x) < 5)
+            {
+
+                movePoint.position += new Vector3(horizontal * 1.4f, 0f, 0f);
+            }
+        }
         cooldown += Time.deltaTime;
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
+
         Vector2 move = new Vector2(horizontal, 0);
         if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f)) {
             lookDirection.Set(move.x, move.y);
@@ -61,7 +76,6 @@ public class PlayerController : MonoBehaviour
 
     private void Launch() {
         GameObject spearInstance = Instantiate(spear, rigidbody.position, Quaternion.identity);
-        spearInstance.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
         Spear spearObj = spearInstance.GetComponent<Spear>();
         spearObj.Launch();
         animator.SetTrigger("Attack");
