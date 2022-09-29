@@ -10,9 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5968297587486058003}
   - component: {fileID: 5365506337332350542}
-  - component: {fileID: 5839227019063478789}
-  - component: {fileID: -2049994816703592593}
-  - component: {fileID: -4384259558759010875}
+  - component: {fileID: -7701161021812757716}
   m_Layer: 8
   m_Name: WallDrag
   m_TagString: Untagged
@@ -87,27 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &5839227019063478789
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8524867705343580471}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 716607894113ae94099d33d628ef5928, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-2049994816703592593
+--- !u!114 &-7701161021812757716
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,33 +94,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8524867705343580471}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7d4eb63159808248a5f734595089ebf, type: 3}
+  m_Script: {fileID: 11500000, guid: a1b685f39a1986344b62aa9f0cb6d8a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
---- !u!61 &-4384259558759010875
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8524867705343580471}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.08509886, y: -0.9360879}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.75, y: 4.18}
-    newSize: {x: 3.75, y: 4.18}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.6735864, y: 0.7420033}
-  m_EdgeRadius: 0
+  card: {fileID: 0}

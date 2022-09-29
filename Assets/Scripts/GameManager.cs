@@ -19,10 +19,8 @@ public class GameManager : MonoBehaviour
         if (draggingObject != null && currentContainter != null)
         {
             GameObject ret = Instantiate(draggingObject.GetComponent<ObjectDragging>().card.objectGame, currentContainter.transform);
-            Debug.Log(ret.transform.position);
             ret.transform.position = currentContainter.transform.position;
-            Debug.Log(ret.transform.position);
-            Debug.Log(currentContainter.transform.position);
+            //ret.transform.localScale = new Vector3(0.5f, 1.5f, 1);
             currentContainter.GetComponent<ObjectContainer>().isFull = true;
         }
     }

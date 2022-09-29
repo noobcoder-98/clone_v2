@@ -14,17 +14,15 @@ public class ObjectContainer : MonoBehaviour
         gameManager = GameManager.instance;
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (gameManager.draggingObject != null && !isFull)
-        {
+
+    private void OnMouseEnter() {
+        if (gameManager.draggingObject != null && !isFull) {
             gameManager.currentContainter = gameObject;
             spriteRenderer.enabled = true;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
+    private void OnMouseExit() {
         gameManager.currentContainter = null;
         spriteRenderer.enabled = false;
     }

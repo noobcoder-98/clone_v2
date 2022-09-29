@@ -7,6 +7,7 @@ public class ObjectCard : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoi
 {
     public GameObject objectDrag;
     public GameObject objectGame;
+    public Canvas canvas;
 
     private GameObject objectDragInstance;
     private GameManager gameManager;
@@ -19,7 +20,7 @@ public class ObjectCard : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoi
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        objectDragInstance = Instantiate(objectDrag, transform);
+        objectDragInstance = Instantiate(objectDrag, canvas.transform);
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         objectDragInstance.transform.position = mousePosition;
         objectDragInstance.GetComponent<ObjectDragging>().card = this;
