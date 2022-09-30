@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.instance.IsWin || GameManager.instance.IsGameOver) 
+            return;
+
         _horizontal = Input.GetAxisRaw("Horizontal");
 
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, speed * Time.deltaTime);
@@ -64,12 +67,13 @@ public class PlayerController : MonoBehaviour
     public void ReceiveDamge(int damage)
     {
         _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, health);
-
         UIHealthBar.instance.SetValue(_currentHealth / (float) health);
+
         if (_currentHealth == 0)
         {
             Destroy(gameObject);
             GameManager.instance.IsGameOver = true;
+            UIResultPanel.instance.ShowResult(true, "GAME OVER");
         }
     }
 

@@ -20,15 +20,10 @@ public class EnemyController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    if (!_isStopped)
-    //        transform.Translate(new Vector3(0, movementSpeed * -1, 0));
-    //}
-
     private void FixedUpdate()
     {
+        if (GameManager.instance.IsGameOver || GameManager.instance.IsWin) 
+            return;
         if (!_isStopped)
             transform.Translate(new Vector3(0, movementSpeed * -1, 0));
     }
@@ -46,13 +41,14 @@ public class EnemyController : MonoBehaviour
         } 
         else if (collision.CompareTag("DeathZone"))
         {
-            GameManager.instance.GameHealth--;
-            if (GameManager.instance.GameHealth <= 0)
+            GameManager.instance.CurrentHealth--;
+            UIGameHealthBar.instance.SetValue(GameManager.instance.CurrentHealth / GameManager.instance.GameHealth);
+            if (GameManager.instance.CurrentHealth <= 0)
             {
                 GameManager.instance.IsGameOver = true;
+                UIResultPanel.instance.ShowResult(true, "GAME OVER");
                 return;
             }
-            UIGameHealthBar.instance.SetValue(GameManager.instance.GameHealth / (float) 5);
         }
     }
 
@@ -72,8 +68,10 @@ public class EnemyController : MonoBehaviour
             transform.parent.GetComponent<SpawnPoint>().enemies.Remove(gameObject);
             Destroy(gameObject);
             GameManager.instance.Score++;
-            if (GameManager.instance.Score == GameManager.instance.MaxScore)
+            if (GameManager.instance.Score == GameManager.instance.MaxScore) {
                 GameManager.instance.IsWin = true;
+                UIResultPanel.instance.ShowResult(true, "WIN");
+            }
         }
         else
         {
