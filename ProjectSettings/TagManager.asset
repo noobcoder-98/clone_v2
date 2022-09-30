@@ -7,6 +7,8 @@ TagManager:
   - DeathZone
   - Enemy
   - Projectile
+  - TopLimit
+  - Wall
   layers:
   - Default
   - TransparentFX

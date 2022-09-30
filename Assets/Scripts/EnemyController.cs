@@ -34,7 +34,7 @@ public class EnemyController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.layer == 8) {
+        if (collision.CompareTag("Wall")) {
             animator.SetBool("Attack", true);
             StartCoroutine(AttackObject(collision));
             _isStopped = true;

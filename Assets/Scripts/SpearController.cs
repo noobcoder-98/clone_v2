@@ -20,6 +20,9 @@ public class SpearController : MonoBehaviour
         if (collision.CompareTag("Enemy")) {
             collision.gameObject.GetComponent<EnemyController>().ReceiveDamge(damage);
             Destroy(gameObject);
+        } 
+        else if (collision.CompareTag("TopLimit")) {
+            Destroy(gameObject);
         }
     }
 
