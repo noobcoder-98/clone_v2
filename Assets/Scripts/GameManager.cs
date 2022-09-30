@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
     public GameObject draggingObject;
     public GameObject currentContainter;
+    public int GameHealth;
 
-    public static GameManager instance;
+    public bool IsGameOver { get; set; }
+    public bool IsWin { get; set; }
+    public int Score { get; set; }
+    public int MaxScore { get; set; }
 
     private void Awake()
     {

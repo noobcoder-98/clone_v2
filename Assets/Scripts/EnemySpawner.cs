@@ -7,8 +7,14 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefab;
     public List<Enemy> enemies;
 
+    private void Start()
+    {
+        GameManager.instance.MaxScore = enemies.Count;
+    }
     private void Update()
     {
+        if (GameManager.instance.IsGameOver) return;
+
         foreach (Enemy enemy in enemies)
         {
             if (!enemy.isSpawned && enemy.spawnerTime <= Time.time)

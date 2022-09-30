@@ -7,70 +7,76 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 3.0f;
-    public float attackCooldown = 1.0f;
+    public float coolDownTime = 1.0f;
     public GameObject spear;
     public int health = 200;
     public Transform movePoint;
     public Transform launchPoint;
 
-    Animator animator;
-    Vector2 lookDirection = new Vector2(1, 0);
-    float horizontal;
-    float cooldown;
-
-    public void ReceiveDamge(int damage) {
-        if (health - damage <= 0) {
-            Destroy(gameObject);
-        } else {
-            health -= damage;
-        }
-    }
+    Animator _animator;
+    Vector2 _lookDirection = new Vector2(1, 0);
+    float _horizontal;
+    float _coolDownTime;
+    float _currentHealth;
 
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
-        cooldown = attackCooldown;
+        _animator = GetComponent<Animator>();
+        _coolDownTime = coolDownTime;
         movePoint.parent = null;
+        _currentHealth = health;
     }
 
     // Update is called once per frame
     void Update()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
+        _horizontal = Input.GetAxisRaw("Horizontal");
 
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, speed * Time.deltaTime);
         if (Vector3.Distance(transform.position, movePoint.position) <= 0.001f)
         {
             
-            if (Mathf.Abs(horizontal) == 1f && Mathf.Abs(horizontal * 1.4f + movePoint.position.x) < 5)
+            if (Mathf.Abs(_horizontal) == 1f && Mathf.Abs(_horizontal * 1.4f + movePoint.position.x) < 5)
             {
 
-                movePoint.position += new Vector3(horizontal * 1.35f, 0f, 0f);
+                movePoint.position += new Vector3(_horizontal * 1.35f, 0f, 0f);
             }
         }
-        cooldown -= Time.deltaTime;
+        _coolDownTime -= Time.deltaTime;
 
-        Vector2 move = new Vector2(horizontal, 0);
+        Vector2 move = new Vector2(_horizontal, 0);
         if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f)) {
-            lookDirection.Set(move.x, move.y);
-            lookDirection.Normalize();
+            _lookDirection.Set(move.x, move.y);
+            _lookDirection.Normalize();
         }
-        animator.SetFloat("Look X", lookDirection.x);
-        animator.SetFloat("Look Y", lookDirection.y);
-        animator.SetFloat("Speed", move.magnitude);
+        _animator.SetFloat("Look X", _lookDirection.x);
+        _animator.SetFloat("Look Y", _lookDirection.y);
+        _animator.SetFloat("Speed", move.magnitude);
 
-        if (Input.GetKeyDown(KeyCode.S) && cooldown <= 0) {
+        if (Input.GetKeyDown(KeyCode.S) && _coolDownTime <= 0) {
             Launch();
-            cooldown = attackCooldown;
+            _coolDownTime = coolDownTime;
         }
 
     }
 
+    public void ReceiveDamge(int damage)
+    {
+        _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, health);
+
+        UIHealthBar.instance.SetValue(_currentHealth / (float) health);
+        if (_currentHealth == 0)
+        {
+            Destroy(gameObject);
+            GameManager.instance.IsGameOver = true;
+        }
+    }
+
     private void Launch() {
         GameObject spearInstance = Instantiate(spear, launchPoint.position, Quaternion.identity);
-        Spear spearObj = spearInstance.GetComponent<Spear>();
+        SpearController spearObj = spearInstance.GetComponent<SpearController>();
         spearObj.Launch();
-        animator.SetTrigger("Attack");
+        _animator.SetTrigger("Attack");
     }
 }

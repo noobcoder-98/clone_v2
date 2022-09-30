@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 5090270973983153547}
   m_Layer: 11
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  attackCooldown: 0.2
+  coolDownTime: 0.5
   spear: {fileID: 3524506051833791109, guid: 7ff18d1c246f35246b5e3a997cc50b17, type: 3}
   health: 200
   movePoint: {fileID: 648229363}

@@ -10,17 +10,9 @@ public class EnemyController : MonoBehaviour
     public float movementSpeed;
     public float damageCooldown;
 
-    private bool isStopped;
-    private bool isCollided;
+    private bool _isStopped;
+    private bool _isCollided;
     Animator animator;
-    public void ReceiveDamge(int damage) {
-        if (health - damage <= 0) {
-            transform.parent.GetComponent<SpawnPoint>().enemies.Remove(gameObject);
-            Destroy(gameObject);
-        } else {
-            health -= damage;
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -29,9 +21,15 @@ public class EnemyController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    //void Update()
+    //{
+    //    if (!_isStopped)
+    //        transform.Translate(new Vector3(0, movementSpeed * -1, 0));
+    //}
+
+    private void FixedUpdate()
     {
-        if (!isStopped)
+        if (!_isStopped)
             transform.Translate(new Vector3(0, movementSpeed * -1, 0));
     }
 
@@ -39,30 +37,56 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.layer == 8) {
             animator.SetBool("Attack", true);
             StartCoroutine(AttackObject(collision));
-            isStopped = true;
-        } else if (collision.gameObject.layer == 11){
-            isCollided = true;
+            _isStopped = true;
+        } else if (collision.CompareTag("Player")) {
+            _isCollided = true;
             animator.SetBool("Attack", true);
             StartCoroutine(AttackPlayer(collision));
-            isStopped = true;
+            _isStopped = true;
+        } 
+        else if (collision.CompareTag("DeathZone"))
+        {
+            GameManager.instance.GameHealth--;
+            if (GameManager.instance.GameHealth <= 0)
+            {
+                GameManager.instance.IsGameOver = true;
+                return;
+            }
+            UIGameHealthBar.instance.SetValue(GameManager.instance.GameHealth / (float) 5);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
-        if (collision.gameObject.layer == 11) {
-            isCollided = false;
+        if (collision.CompareTag("Player")) {
+            _isCollided = false;
             StopCoroutine(AttackPlayer(collision));
             animator.SetBool("Attack", false);
-            isStopped = false;
+            _isStopped = false;
+        } 
+    }
+
+    public void ReceiveDamge(int damage)
+    {
+        if (health - damage <= 0)
+        {
+            transform.parent.GetComponent<SpawnPoint>().enemies.Remove(gameObject);
+            Destroy(gameObject);
+            GameManager.instance.Score++;
+            if (GameManager.instance.Score == GameManager.instance.MaxScore)
+                GameManager.instance.IsWin = true;
+        }
+        else
+        {
+            health -= damage;
         }
     }
 
     IEnumerator AttackPlayer(Collider2D collision) {
         if (collision == null) {
-            isStopped = false;
+            _isStopped = false;
             animator.SetBool("Attack", false);
         } else {
-            if (!isCollided)
+            if (!_isCollided)
                 yield break;
             collision.gameObject.GetComponent<PlayerController>().ReceiveDamge(damage);
             yield return new WaitForSeconds(damageCooldown);
@@ -73,7 +97,7 @@ public class EnemyController : MonoBehaviour
 
     IEnumerator AttackObject(Collider2D collision) {
         if (collision == null) {
-            isStopped = false;
+            _isStopped = false;
             animator.SetBool("Attack", false);
         } else {
             collision.gameObject.GetComponent<WallController>().ReceiveDamge(damage);

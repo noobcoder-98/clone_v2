@@ -2,14 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spear : MonoBehaviour
+public class SpearController : MonoBehaviour
 {
     public float movementSpeed;
     public int damage;
-
-    public void Launch() {
-        transform.Translate(new Vector3(0, movementSpeed, 0));
-    }
 
     // Update is called once per frame
     void Update()
@@ -21,9 +17,14 @@ public class Spear : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.layer == 9) {
+        if (collision.CompareTag("Enemy")) {
             collision.gameObject.GetComponent<EnemyController>().ReceiveDamge(damage);
             Destroy(gameObject);
         }
+    }
+
+    public void Launch()
+    {
+        transform.Translate(new Vector3(0, movementSpeed, 0));
     }
 }

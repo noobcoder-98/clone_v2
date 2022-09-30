@@ -11,6 +11,7 @@ public class ObjectCard : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoi
 
     private GameObject objectDragInstance;
     private GameManager gameManager;
+
     public void OnDrag(PointerEventData eventData)
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
