@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
         }
     }
     public float CurrentHealth { get; set; }
-
+    public int EscapedEnemies { get; set; }
     public int MaxScore { get; set; }
 
     private void Start() {
@@ -52,5 +52,11 @@ public class GameManager : MonoBehaviour
             ret.transform.localScale = new Vector3(0.5f, 1f, 0.5f);
             currentContainter.GetComponent<ObjectContainer>().isFull = true;
         }
+    }
+    public bool CheckWin() {
+        return Score + EscapedEnemies == MaxScore;
+    }
+    public bool CheckGameOver() {
+        return CurrentHealth <= 0;
     }
 }

@@ -7,6 +7,7 @@ public class SpearController : MonoBehaviour
     public float movementSpeed;
     public int damage;
 
+    bool _isCollided;
     // Update is called once per frame
     void Update()
     {
@@ -17,9 +18,11 @@ public class SpearController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("Enemy")) {
+        if (collision.CompareTag("Enemy") && !_isCollided) {
+            _isCollided = true;
             collision.gameObject.GetComponent<EnemyController>().ReceiveDamge(damage);
             gameObject.SetActive(false);
+            
         } 
         else if (collision.CompareTag("TopLimit")) {
             gameObject.SetActive(false);
@@ -28,6 +31,7 @@ public class SpearController : MonoBehaviour
 
     public void Launch()
     {
+        _isCollided = false;
         transform.Translate(new Vector3(0, movementSpeed, 0));
     }
 }

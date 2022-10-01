@@ -43,11 +43,16 @@ public class EnemyController : MonoBehaviour
         {
             GameManager.instance.CurrentHealth--;
             UIGameHealthBar.instance.SetValue(GameManager.instance.CurrentHealth / GameManager.instance.GameHealth);
-            if (GameManager.instance.CurrentHealth <= 0)
+            GameManager.instance.EscapedEnemies++;
+            if (GameManager.instance.CheckGameOver())
             {
                 GameManager.instance.IsGameOver = true;
                 UIResultPanel.instance.ShowResult(true, "GAME OVER");
                 return;
+            }
+            else if (GameManager.instance.CheckWin()) {
+                GameManager.instance.IsWin= true;
+                UIResultPanel.instance.ShowResult(true, "WIN");
             }
         }
     }
@@ -68,7 +73,7 @@ public class EnemyController : MonoBehaviour
             transform.parent.GetComponent<SpawnPoint>().enemies.Remove(gameObject);
             Destroy(gameObject);
             GameManager.instance.Score++;
-            if (GameManager.instance.Score == GameManager.instance.MaxScore) {
+            if (GameManager.instance.CheckWin()) {
                 GameManager.instance.IsWin = true;
                 UIResultPanel.instance.ShowResult(true, "WIN");
             }

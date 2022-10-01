@@ -42,7 +42,6 @@ public class PlayerController : MonoBehaviour
             
             if (Mathf.Abs(_horizontal) == 1f && Mathf.Abs(_horizontal * 1.4f + movePoint.position.x) < 5)
             {
-
                 movePoint.position += new Vector3(_horizontal * 1.35f, 0f, 0f);
             }
         }
