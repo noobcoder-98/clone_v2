@@ -19,10 +19,10 @@ public class SpearController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.CompareTag("Enemy")) {
             collision.gameObject.GetComponent<EnemyController>().ReceiveDamge(damage);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         } 
         else if (collision.CompareTag("TopLimit")) {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 

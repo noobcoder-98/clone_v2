@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static EnemySpawner instance;
+
     public GameObject enemyPrefab;
     public List<Enemy> enemies;
+
+    private void Awake() {
+        instance = this; 
+    }
 
     private void Start()
     {
@@ -13,11 +19,12 @@ public class EnemySpawner : MonoBehaviour
     }
     private void Update()
     {
-        if (GameManager.instance.IsGameOver) return;
+        if (GameManager.instance.IsGameOver || GameManager.instance.IsWin)
+            return;
 
         foreach (Enemy enemy in enemies)
         {
-            if (!enemy.isSpawned && enemy.spawnerTime <= Time.time)
+            if (!enemy.isSpawned && enemy.spawnerTime <= Time.timeSinceLevelLoad)
             {
                 if(enemy.randomSpawn) {
                     enemy.Spawner = Random.Range(0, transform.childCount);

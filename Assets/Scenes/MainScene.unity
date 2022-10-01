@@ -2919,9 +2919,9 @@ RectTransform:
   m_Father: {fileID: 1162736156}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 53, y: 5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 49.996, y: -107.58}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1239856972
@@ -3012,8 +3012,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: -21.8867}
+  m_SizeDelta: {x: 100, y: 56.2267}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1256650006
 MonoBehaviour:
@@ -3028,14 +3028,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.41509432, g: 0.15115623, b: 0.1194375, a: 0.27058825}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.27058825}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 6df0b73f3612ca94fa59230f7ef9d1d3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3170,17 +3170,14 @@ MonoBehaviour:
   enemies:
   - spawnerTime: 0
     Spawner: 0
-    useSpawner: 0
     randomSpawn: 0
     isSpawned: 0
   - spawnerTime: 1
     Spawner: 2
-    useSpawner: 0
     randomSpawn: 0
     isSpawned: 0
   - spawnerTime: 2
     Spawner: 3
-    useSpawner: 0
     randomSpawn: 0
     isSpawned: 0
 --- !u!1 &1290984950
@@ -3193,6 +3190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1290984952}
   - component: {fileID: 1290984951}
+  - component: {fileID: 1290984953}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3214,7 +3212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   draggingObject: {fileID: 0}
   currentContainter: {fileID: 0}
-  GameHealth: 2
+  GameHealth: 10
 --- !u!4 &1290984952
 Transform:
   m_ObjectHideFlags: 0
@@ -3230,6 +3228,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1290984953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290984950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3d396fde05fc94469e8832f2ad32132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spearPool: []
+  objectToPool: {fileID: 3524506051833791109, guid: 7ff18d1c246f35246b5e3a997cc50b17, type: 3}
+  poolSize: 20
 --- !u!1 &1303608543
 GameObject:
   m_ObjectHideFlags: 0
@@ -5235,6 +5248,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3057888200079613860}
     m_Modifications:
+    - target: {fileID: -2049994816703592593, guid: ec3280325adf2a84ca3a37d08d12fa4e, type: 3}
+      propertyPath: health
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 5365506337332350542, guid: ec3280325adf2a84ca3a37d08d12fa4e, type: 3}
       propertyPath: m_FlipX
       value: 0

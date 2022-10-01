@@ -66,6 +66,8 @@ public class PlayerController : MonoBehaviour
 
     public void ReceiveDamge(int damage)
     {
+        if (GameManager.instance.IsGameOver || GameManager.instance.IsWin) return;
+
         _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, health);
         UIHealthBar.instance.SetValue(_currentHealth / (float) health);
 
@@ -78,7 +80,12 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Launch() {
-        GameObject spearInstance = Instantiate(spear, launchPoint.position, Quaternion.identity);
+        GameObject spearInstance = ObjectPool.instance.GetSpear();
+        if (spearInstance == null) 
+            return;
+        spearInstance.transform.position = launchPoint.position;
+        spearInstance.transform.rotation = Quaternion.identity;
+        spearInstance.SetActive(true);
         SpearController spearObj = spearInstance.GetComponent<SpearController>();
         spearObj.Launch();
         _animator.SetTrigger("Attack");
